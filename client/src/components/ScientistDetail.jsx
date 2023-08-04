@@ -39,6 +39,7 @@ function ScientistDetail() {
   useEffect(() => {
     fetchScientist()
         .catch(console.error)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   const planetMap = {

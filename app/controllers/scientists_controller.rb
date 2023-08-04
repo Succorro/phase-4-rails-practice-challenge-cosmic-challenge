@@ -1,6 +1,6 @@
 class ScientistsController < ApplicationController
 
-    before_action :one_scientist, only: [:show, :update, :destroy]
+    # before_action :one_scientist, only: [:show, :update, :destroy]
 
 
     def index
@@ -8,7 +8,7 @@ class ScientistsController < ApplicationController
     end
 
     def show
-        render json: @scientist, serializer: ScientistPlanetSerializer
+        render json: one_scientist, serializer: ScientistWithPlanetsSerializer
     end
 
     def create
@@ -17,26 +17,23 @@ class ScientistsController < ApplicationController
     end
 
     def update
-        @scientist.update!(scientist_params_update)
-        render json: @scientist, status: :accepted
+        one_scientist.update!(scientist_params)
+        render json: one_scientist, status: :accepted
     end
 
     def destroy
-        @scientist.destroy
+        one_scientist.destroy
         head :no_content
     end
 
     private
 
     def one_scientist
-        @scientist = Scientists.find(params[:id])
+        Scientist.find(params[:id])
+
     end
 
     def scientist_params
-        params.permit(:name, :field_of_study, :avatar)
-    end
-
-    def scientist_params_update
         params.permit(:name, :field_of_study, :avatar)
     end
 end
